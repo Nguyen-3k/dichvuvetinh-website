@@ -1,0 +1,185 @@
+/* =========================================================
+   responsive.css - Media Queries for Tablet & Mobile
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 72px;
+  }
+
+  .hero-grid,
+  .service-detail-card,
+  .maintenance-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual img {
+    min-height: 420px;
+  }
+
+  .featured-grid,
+  .feedback-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-detail-card img {
+    min-height: 340px;
+  }
+}
+
+@media (max-width: 860px) {
+  .mobile-menu-btn {
+    display: inline-block;
+  }
+
+  .main-nav {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    top: calc(var(--header-height) + 10px);
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .main-nav.open {
+    display: flex;
+  }
+
+  .nav-link {
+    border-radius: 14px;
+  }
+
+  .auth-area .btn:not(.logout-btn) {
+    display: none;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .section {
+    padding: 68px 0;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-controls {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    border-radius: 18px;
+  }
+
+  .tab-btn {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(100% - 24px, var(--container));
+  }
+
+  .section-heading {
+    text-align: left;
+  }
+
+  .hero-actions,
+  .auth-area {
+    gap: 8px;
+  }
+
+  .hero-visual img {
+    min-height: 320px;
+    border-width: 6px;
+  }
+
+  .floating-card {
+    position: static;
+    margin-top: 12px;
+  }
+
+  .orb {
+    display: none;
+  }
+
+  .featured-grid,
+  .feedback-grid,
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card img {
+    height: 190px;
+  }
+
+  .service-detail-card {
+    padding: 14px;
+  }
+
+  .service-detail-card img {
+    min-height: 240px;
+  }
+
+  .price-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .contact-info-list div,
+  .bill-row,
+  .booking-price-box {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .contact-info-list span {
+    text-align: left;
+  }
+
+  .form-card,
+  .modal-box {
+    padding: 22px;
+  }
+
+  .chat-widget {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .chat-toggle {
+    width: 54px;
+    height: 54px;
+  }
+
+  .toast {
+    top: 82px;
+    right: 12px;
+    width: calc(100vw - 24px);
+  }
+}
+
+@media (max-width: 430px) {
+  .logo span:last-child {
+    display: none;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-content h1 {
+    font-size: 2.35rem;
+  }
+}
