@@ -109,21 +109,18 @@ function initMobileMenu() {
   });
 }
 
-function initScrollSpy() {
-  const sections = document.querySelectorAll('section[id]');
+function initActiveNav() {
   const navLinks = document.querySelectorAll('.nav-link');
+  // Lấy tên file hiện tại (vd: dich-vu.html)
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
 
-  window.addEventListener('scroll', () => {
-    let currentId = 'home';
-
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop - 120;
-      if (window.scrollY >= sectionTop) currentId = section.id;
-    });
-
-    navLinks.forEach((link) => {
-      link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
-    });
+  navLinks.forEach(link => {
+    // Nếu href của link trùng với tên file hiện hành thì thêm class active
+    if (link.getAttribute('href') === currentPath) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
   });
 }
 
@@ -131,5 +128,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initChatbox();
   initModalCloseEvents();
   initMobileMenu();
-  initScrollSpy();
+  initActiveNav(); // Gọi hàm mới này thay cho initScrollSpy
 });

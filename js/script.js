@@ -46,14 +46,18 @@ function renderServiceDetail(serviceId) {
           <table class="price-table">
             <thead>
               <tr>
+                <th style="width: 60px; text-align: center;">Chọn</th>
                 <th>Gói dịch vụ</th>
                 <th>Mô tả</th>
                 <th>Giá</th>
               </tr>
             </thead>
             <tbody>
-              ${service.priceDetails.map((item) => `
-                <tr>
+              ${service.priceDetails.map((item, index) => `
+                <tr style="cursor: pointer;" onclick="document.getElementById('pkg_${index}').checked = true;">
+                  <td style="text-align: center;">
+                    <input type="radio" name="selectedPackage" id="pkg_${index}" value="${index}" ${index === 0 ? 'checked' : ''} style="cursor: pointer; transform: scale(1.2);">
+                  </td>
                   <td>${item.package}</td>
                   <td>${item.description}</td>
                   <td>${formatCurrency(item.price)}</td>
@@ -74,10 +78,12 @@ function renderServiceDetail(serviceId) {
 }
 
 function setActiveTab(serviceId) {
+  // 1. Đổi màu nút Tab
   document.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.classList.toggle('active', btn.dataset.tab === serviceId);
   });
 
+  // 2. Render nội dung
   renderServiceDetail(serviceId);
 }
 
@@ -97,8 +103,8 @@ function initFeaturedClick() {
   if (!wrapper) return;
 
   function goToService(serviceId) {
-    setActiveTab(serviceId);
-    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Chuyển hướng sang trang dịch vụ kèm parameter
+    window.location.href = `dich-vu.html?service=${serviceId}`;
   }
 
   wrapper.addEventListener('click', (event) => {
@@ -112,15 +118,6 @@ function initFeaturedClick() {
     const card = event.target.closest('[data-service-card]');
     if (!card) return;
     goToService(card.dataset.serviceCard);
-  });
-}
-
-function initHeaderServiceLinks() {
-  document.querySelectorAll('[data-tab-link]').forEach((link) => {
-    link.addEventListener('click', () => {
-      const serviceId = link.dataset.tabLink;
-      setTimeout(() => setActiveTab(serviceId), 120);
-    });
   });
 }
 
@@ -145,11 +142,17 @@ function renderFeedback() {
   `).join('');
 }
 
+// Khởi chạy các hàm khi HTML load xong
 document.addEventListener('DOMContentLoaded', () => {
   renderFeaturedServices();
-  renderServiceDetail('internet');
   renderFeedback();
   initTabs();
   initFeaturedClick();
-  initHeaderServiceLinks();
+
+  // Đọc tham số trên thanh URL và tự động mở đúng tab đó
+  if (document.getElementById('serviceDetail')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeService = urlParams.get('service') || 'internet'; 
+    setActiveTab(activeService);
+  }
 });

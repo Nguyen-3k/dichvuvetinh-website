@@ -50,6 +50,38 @@ const servicesData = [
       { package: 'Comfort Kit', description: 'Đèn, rèm, cảm biến, điều khiển giọng nói', price: 6900000 },
       { package: 'Premium Kit', description: 'Tự động hóa toàn nhà, khóa cửa, an ninh', price: 12500000 }
     ]
+  },
+  {
+    id: 'smartlock',
+    category: 'Khóa thông minh',
+    title: 'Lắp đặt Khóa cửa điện tử',
+    shortDesc: 'Bảo mật tuyệt đối, mở khóa bằng vân tay, thẻ từ, mã số và qua App di động.',
+    image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=900&q=80', // Bạn có thể tìm link ảnh ổ khóa đẹp trên Unsplash thay vào đây
+    technology: 'Sinh trắc học vân tay, Kết nối Wi-Fi/Bluetooth, Chống phá khóa cảnh báo',
+    installTime: '1 - 3 giờ tùy loại cửa',
+    price: 4500000,
+    unit: 'bộ cơ bản',
+    priceDetails: [
+      { package: 'Khóa cửa gỗ/thép', description: 'Vân tay, mã số, thẻ từ, chìa cơ', price: 4500000 },
+      { package: 'Khóa cửa kính cường lực', description: 'Không khoan cắt kính, vân tay, thẻ từ', price: 3800000 },
+      { package: 'Khóa cổng sắt ngoài trời', description: 'Chống nước IP65, chịu va đập mạnh', price: 5200000 }
+    ]
+  },
+  {
+    id: 'maintenance',
+    category: 'Bảo trì',
+    title: 'Bảo trì & Tối ưu hệ thống',
+    shortDesc: 'Vệ sinh thiết bị, cập nhật firmware, đi lại dây mạng và tối ưu tín hiệu toàn diện.',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80',
+    technology: 'Kiểm tra suy hao quang, Phân tích băng thông, Cân chỉnh góc Camera',
+    installTime: '1 - 2 giờ/lần bảo trì',
+    price: 299000,
+    unit: 'lần',
+    priceDetails: [
+      { package: 'Gói Cơ bản (1 lần)', description: 'Kiểm tra lỗi mạng, vệ sinh bề mặt camera', price: 299000 },
+      { package: 'Gói Chuyên sâu (6 tháng)', description: 'Tối ưu toàn bộ hệ thống, thay jack cắm cũ', price: 1200000 },
+      { package: 'Gói Doanh nghiệp (1 năm)', description: 'Hỗ trợ 24/7, bảo trì định kỳ mỗi tháng', price: 5500000 }
+    ]
   }
 ];
 
@@ -71,6 +103,12 @@ const feedbackData = [
     service: 'SmartHome',
     rating: 4,
     comment: 'Hệ thống đèn và cảm biến hoạt động tốt. Mình thích nhất kịch bản tự tắt đèn khi ra khỏi nhà.'
+  },
+  {
+    name: 'Phạm Văn Đạt',
+    service: 'Bảo trì',
+    rating: 5,
+    comment: 'Gói bảo trì rất đáng tiền. Mạng dạo này hay chập chờn, gọi thợ qua tối ưu lại cục mesh giờ chạy phà phà luôn.'
   }
 ];
 
@@ -90,5 +128,9 @@ const faqData = [
   {
     question: 'Có hỗ trợ ngoài giờ hành chính không?',
     answer: 'Có. Bộ phận kỹ thuật hỗ trợ từ 08:00 đến 22:00 mỗi ngày, các ca khẩn cấp sẽ được ưu tiên xử lý.'
+  },
+  {
+    question: 'Các gói bảo trì áp dụng cho thiết bị cũ không?',
+    answer: 'Hoàn toàn được. Chúng tôi nhận bảo trì, sửa chữa và tối ưu hóa hệ thống mạng, camera dù thiết bị ban đầu không phải do chúng tôi cung cấp.'
   }
 ];

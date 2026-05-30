@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dịch vụ bảo trì, nâng cấp thiết bị công nghệ." />
+  <title>Bảo trì | Dịch vụ vệ tinh</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/ui.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <header class="site-header" id="header">
+    <div class="container header-wrapper">
+      <a href="index.html" class="logo" aria-label="Dịch vụ vệ tinh">
+        <span class="logo-icon"></span>
+        <span>Dịch vụ <strong>vệ tinh</strong></span>
+      </a>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Mở menu điều hướng">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="dich-vu.html" class="nav-link">Dịch vụ</a>
+        <a href="bao-tri.html" class="nav-link active">Bảo trì</a>
+        <a href="lien-he.html" class="nav-link">Liên hệ</a>
+      </nav>
+
+      <div class="auth-area" id="authArea"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section maintenance-section" id="maintenance">
+      <div class="container">
+        <div class="section-heading compact" style="text-align: center; margin-bottom: 50px;">
+          <span class="eyebrow" style="color: #93c5fd;">Bảo trì định kỳ</span>
+          <h2 style="color: #fff;">Giải pháp bảo vệ hệ thống toàn diện</h2>
+          <p style="color: #dbeafe; max-width: 650px; margin: 0 auto;">
+            Đội kỹ thuật kiểm tra đường truyền, vệ sinh camera, cập nhật firmware, tối ưu Wi-Fi và kiểm tra
+            bảo mật thiết bị SmartHome theo định kỳ. Chọn gói phù hợp với bạn:
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; align-items: center;">
+          
+          <div class="maintenance-card">
+            <h3>Gói Cơ bản (1 lần)</h3>
+            <strong>299.000đ</strong>
+            <p style="min-height: 48px;">Khắc phục sự cố tức thời, kiểm tra lỗi mạng, vệ sinh bề mặt camera ngoài trời.</p>
+            <ul class="check-list" style="margin-bottom: 28px; font-size: 0.95rem;">
+              <li>Kiểm tra tín hiệu mạng, router.</li>
+              <li>Vệ sinh 1-2 mắt camera.</li>
+              <li>Hỗ trợ xử lý trong 2-4h.</li>
+            </ul>
+            <button class="btn btn-outline btn-full" style="color: #0059ff; border-color: rgba(255,255,255,0.3);" onclick="openModal('maintenanceModal')">Đăng ký ngay</button>
+          </div>
+
+          <div class="maintenance-card" style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)); border-color: var(--color-primary); transform: scale(1.05); position: relative; z-index: 2; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+            <div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--color-secondary); color: #fff; padding: 4px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.5px;">ĐƯỢC CHỌN NHIỀU</div>
+            <h3>Gói Chuyên sâu (6 tháng)</h3>
+            <strong style="color: #fff;">1.200.000đ</strong>
+            <p style="min-height: 48px; color: #e0e7ff;">Bảo vệ toàn diện, tối ưu băng thông, thay jack cắm cũ và sao lưu dữ liệu.</p>
+            <ul class="check-list" style="margin-bottom: 28px; font-size: 0.95rem;">
+              <li style="color: #fff;">Bảo dưỡng toàn bộ hệ thống.</li>
+              <li style="color: #fff;">Cân chỉnh góc nhìn camera.</li>
+              <li style="color: #fff;">Kiểm tra kịch bản SmartHome.</li>
+              <li style="color: #fff;">Hỗ trợ ưu tiên xử lý nhanh.</li>
+            </ul>
+            <button class="btn btn-full" style="background: #fff; color: var(--color-primary-dark); font-weight: 800;" onclick="openModal('maintenanceModal')">Đăng ký ngay</button>
+          </div>
+
+          <div class="maintenance-card">
+            <h3>Doanh nghiệp (1 năm)</h3>
+            <strong>5.500.000đ</strong>
+            <p style="min-height: 48px;">Hỗ trợ doanh nghiệp 24/7, bảo trì định kỳ mỗi tháng, mượn thiết bị thay thế.</p>
+            <ul class="check-list" style="margin-bottom: 28px; font-size: 0.95rem;">
+              <li>Bảo trì định kỳ 1 lần/tháng.</li>
+              <li>Giám sát mạng qua Cloud.</li>
+              <li>Cho mượn thiết bị thay thế.</li>
+              <li>Hỗ trợ khẩn cấp 24/7.</li>
+            </ul>
+            <button class="btn btn-outline btn-full" style="color: #0059ff; border-color: rgba(255,255,255,0.3);" onclick="openModal('maintenanceModal')">Liên hệ khảo sát</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="authModal" aria-hidden="true">
+    <div class="modal-box modal-sm" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" data-close-modal="authModal" aria-label="Đóng popup">×</button>
+      <div class="modal-header">
+        <span class="eyebrow" style="color: var(--color-primary);">TÀI KHOẢN HỆ THỐNG</span>
+        <h2 id="authTitle">Đăng nhập</h2>
+        <p id="authSubtitle">Vui lòng đăng nhập để tiếp tục.</p>
+      </div>
+
+      <form id="authForm" novalidate>
+        <input type="hidden" id="authMode" value="login" />
+
+        <div class="form-group" id="nameGroup" style="display: none;">
+          <label for="authFullName">Họ và tên</label>
+          <input type="text" id="authFullName" name="fullName" placeholder="Ví dụ: Nguyễn Văn A" />
+          <small class="error-message"></small>
+        </div>
+        <div class="form-group">
+          <label for="authEmail">Email</label>
+          <input type="email" id="authEmail" name="email" placeholder="Ví dụ: email@gmail.com" />
+          <small class="error-message"></small>
+        </div>
+        <div class="form-group">
+          <label for="authPassword">Mật khẩu</label>
+          <input type="password" id="authPassword" name="password" placeholder="Mật khẩu (ít nhất 6 ký tự)" />
+          <small class="error-message"></small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-full" id="authSubmitBtn">Đăng nhập</button>
+
+        <div style="text-align: center; margin-top: 18px; font-size: 0.9rem;">
+          <span id="authToggleText">Chưa có tài khoản?</span>
+          <a href="#" id="authToggleLink" style="color: var(--color-primary); font-weight: 700;">Đăng ký ngay</a>
+        </div>
+      </form>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <div class="chat-widget" id="chatWidget">
+    <button class="chat-toggle" id="chatToggle" aria-label="Mở chat tư vấn"><span>💬</span></button>
+    <div class="chat-panel" id="chatPanel" aria-hidden="true">
+      <div class="chat-header">
+        <div><strong>Trợ lý vệ tinh</strong><span>Online • phản hồi tự động</span></div>
+        <button id="closeChatBtn" aria-label="Đóng chat">×</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-message bot">Xin chào! Bạn muốn hỏi nhanh về dịch vụ nào?</div>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/data.js"></script>
+  <script src="js/effect.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/script.js"></script>
+
+  <div class="modal-backdrop" id="maintenanceModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="maintenanceTitle">
+      <button class="modal-close" data-close-modal="maintenanceModal" aria-label="Đóng popup">×</button>
+      <div class="modal-header">
+        <span class="eyebrow">Dịch vụ tận nơi</span>
+        <h2 id="maintenanceTitle">Đăng ký bảo trì</h2>
+        <p>Kỹ thuật viên sẽ đến kiểm tra định kỳ hệ thống của bạn.</p>
+      </div>
+
+      <form id="maintenanceForm" novalidate>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="maintName">Họ và tên</label>
+            <input type="text" id="maintName" name="name" placeholder="Nhập họ tên" />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-group">
+            <label for="maintPhone">Số điện thoại</label>
+            <input type="tel" id="maintPhone" name="phone" placeholder="Nhập số điện thoại" />
+            <small class="error-message"></small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="maintAddress">Địa chỉ cần bảo trì</label>
+          <input type="text" id="maintAddress" name="address" placeholder="Số nhà, đường, phường/xã, quận/huyện" />
+          <small class="error-message"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="maintDevice">Khách hàng muốn bảo trì thiết bị gì?</label>
+          <select id="maintDevice" name="device">
+            <option value="">-- Chọn thiết bị --</option>
+            <option value="Internet">Hệ thống mạng (Internet/Wi-Fi)</option>
+            <option value="Camera">Hệ thống Camera an ninh</option>
+            <option value="SmartHome">Thiết bị Nhà thông minh (SmartHome)</option>
+            <option value="Khác">Nhiều thiết bị / Khác</option>
+          </select>
+          <small class="error-message"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="maintNote">Tình trạng thiết bị hiện tại</label>
+          <textarea id="maintNote" name="note" rows="3" placeholder="Ví dụ: Mạng chậm, camera bị mờ, hoặc chỉ cần vệ sinh định kỳ..."></textarea>
+          <small class="error-message"></small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-full" id="confirmMaintBtn">
+          Gửi yêu cầu bảo trì
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Liên hệ với Dịch vụ vệ tinh để được tư vấn miễn phí." />
+  <title>Liên hệ | Dịch vụ vệ tinh</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/ui.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <header class="site-header" id="header">
+    <div class="container header-wrapper">
+      <a href="index.html" class="logo" aria-label="Dịch vụ vệ tinh">
+        <span class="logo-icon"></span>
+        <span>Dịch vụ <strong>vệ tinh</strong></span>
+      </a>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Mở menu điều hướng">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="dich-vu.html" class="nav-link">Dịch vụ</a>
+        <a href="bao-tri.html" class="nav-link">Bảo trì</a>
+        <a href="lien-he.html" class="nav-link active">Liên hệ</a>
+      </nav>
+
+      <div class="auth-area" id="authArea"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section contact-section" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <span class="eyebrow">Liên hệ tư vấn</span>
+          <h2>Chưa muốn lắp ngay? Gửi yêu cầu để được tư vấn</h2>
+          <p>
+            Điền thông tin cơ bản, chúng tôi sẽ gọi lại để khảo sát nhu cầu, khu vực triển khai và đề xuất
+            gói phù hợp nhất.
+          </p>
+          <div class="contact-info-list">
+            <div>
+              <strong>Hotline</strong><span>0900 123 456</span>
+            </div>
+            <div>
+              <strong>Email</strong><span>support@dichvuvetinh.vn</span>
+            </div>
+            <div>
+              <strong>Thời gian</strong><span>08:00 - 22:00 mỗi ngày</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="form-card" id="consultForm" novalidate>
+          <h3>Yêu cầu tư vấn</h3>
+          <div class="form-group">
+            <label for="consultName">Họ và tên</label>
+            <input type="text" id="consultName" name="name" placeholder="Ví dụ: Nguyễn Văn An" />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-group">
+            <label for="consultPhone">Số điện thoại</label>
+            <input type="tel" id="consultPhone" name="phone" placeholder="Ví dụ: 0912345678" />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-group">
+            <label for="consultArea">Khu vực cần hỗ trợ</label>
+            <input type="text" id="consultArea" name="area" placeholder="Ví dụ: Buôn Ma Thuột, Đắk Lắk" />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-group">
+            <label for="consultNeed">Nhu cầu</label>
+            <select id="consultNeed" name="need">
+              <option value="">Chọn nhu cầu</option>
+              <option value="Internet">Internet</option>
+              <option value="Camera">Camera</option>
+              <option value="SmartHome">SmartHome</option>
+              <option value="Bảo trì">Bảo trì</option>
+            </select>
+            <small class="error-message"></small>
+          </div>
+          <div class="form-group">
+            <label for="consultNote">Ghi chú thêm</label>
+            <textarea id="consultNote" name="note" rows="4" placeholder="Mô tả sơ bộ nhu cầu của bạn"></textarea>
+          </div>    
+          <button type="submit" class="btn btn-primary btn-full">Gửi yêu cầu</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="authModal" aria-hidden="true">
+    <div class="modal-box modal-sm" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" data-close-modal="authModal" aria-label="Đóng popup">×</button>
+      <div class="modal-header">
+        <span class="eyebrow" style="color: var(--color-primary);">TÀI KHOẢN HỆ THỐNG</span>
+        <h2 id="authTitle">Đăng nhập</h2>
+        <p id="authSubtitle">Vui lòng đăng nhập để tiếp tục.</p>
+      </div>
+
+      <form id="authForm" novalidate>
+        <input type="hidden" id="authMode" value="login" />
+
+        <div class="form-group" id="nameGroup" style="display: none;">
+          <label for="authFullName">Họ và tên</label>
+          <input type="text" id="authFullName" name="fullName" placeholder="Ví dụ: Nguyễn Văn A" />
+          <small class="error-message"></small>
+        </div>
+        <div class="form-group">
+          <label for="authEmail">Email</label>
+          <input type="email" id="authEmail" name="email" placeholder="Ví dụ: email@gmail.com" />
+          <small class="error-message"></small>
+        </div>
+        <div class="form-group">
+          <label for="authPassword">Mật khẩu</label>
+          <input type="password" id="authPassword" name="password" placeholder="Mật khẩu (ít nhất 6 ký tự)" />
+          <small class="error-message"></small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-full" id="authSubmitBtn">Đăng nhập</button>
+
+        <div style="text-align: center; margin-top: 18px; font-size: 0.9rem;">
+          <span id="authToggleText">Chưa có tài khoản?</span>
+          <a href="#" id="authToggleLink" style="color: var(--color-primary); font-weight: 700;">Đăng ký ngay</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    </div>
+  </div>
+
+  <div class="chat-widget" id="chatWidget">
+    <button class="chat-toggle" id="chatToggle" aria-label="Mở chat tư vấn"><span>💬</span></button>
+    <div class="chat-panel" id="chatPanel" aria-hidden="true">
+      <div class="chat-header">
+        <div><strong>Trợ lý vệ tinh</strong><span>Online • phản hồi tự động</span></div>
+        <button id="closeChatBtn" aria-label="Đóng chat">×</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-message bot">Xin chào! Bạn muốn hỏi nhanh về dịch vụ nào?</div>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script src="js/data.js"></script>
+  <script src="js/effect.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

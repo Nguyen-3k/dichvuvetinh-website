@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Dịch vụ vệ tinh - Lắp đặt, bảo trì Internet, Camera và SmartHome chuyên nghiệp." />
-  <title>Dịch vụ vệ tinh | Internet - Camera - SmartHome</title>
+  <meta name="description" content="Chi tiết các dịch vụ Lắp đặt, bảo trì Internet, Camera và SmartHome." />
+  <title>Dịch vụ | Dịch vụ vệ tinh</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,94 +26,41 @@
       </a>
 
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Mở menu điều hướng">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
 
-    <nav class="main-nav" id="mainNav">
-      <a href="index.html" class="nav-link active">Trang chủ</a>
-      <a href="dich-vu.html" class="nav-link">Dịch vụ</a>
-      <a href="bao-tri.html" class="nav-link">Bảo trì</a>
-      <a href="lien-he.html" class="nav-link">Liên hệ</a>
-    </nav>
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="dich-vu.html" class="nav-link active">Dịch vụ</a>
+        <a href="bao-tri.html" class="nav-link">Bảo trì</a>
+        <a href="lien-he.html" class="nav-link">Liên hệ</a>
+      </nav>
 
       <div class="auth-area" id="authArea"></div>
     </div>
   </header>
 
   <main>
-    <section class="hero section" id="home">
-      <div class="container hero-grid">
-        <div class="hero-content fade-up">
-          <span class="eyebrow">Tech Service • Nhanh • An toàn • Tận nơi</span>
-          <h1>Lắp đặt Internet, Camera và SmartHome chuyên nghiệp</h1>
-          <p>
-            Dịch vụ vệ tinh hỗ trợ khảo sát, tư vấn, lắp đặt và bảo trì hệ thống kết nối số cho gia đình,
-            văn phòng, cửa hàng với quy trình minh bạch và đội kỹ thuật phản hồi nhanh.
-          </p>
-          <div class="hero-actions">
-            <a href="dich-vu.html" class="btn btn-primary btn-lg">Xem dịch vụ</a>
-            <a href="lien-he.html" class="btn btn-outline btn-lg">Yêu cầu tư vấn</a>
-          </div>
-          <div class="hero-stats">
-            <div>
-              <strong>15 phút</strong>
-              <span>phản hồi tư vấn</span>
-            </div>
-            <div>
-              <strong>24/7</strong>
-              <span>hỗ trợ kỹ thuật</span>
-            </div>
-            <div>
-              <strong>98%</strong>
-              <span>khách hàng hài lòng</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-visual fade-up delay-1">
-          <div class="orb orb-blue"></div>
-          <div class="orb orb-orange"></div>
-          <img
-            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
-            alt="Kỹ thuật viên đang cấu hình thiết bị công nghệ"
-          />
-          <!-- <div class="floating-card top-card">
-            <span class="status-dot"></span>
-            Hệ thống đang hoạt động ổn định
-          </div> -->
-          <div class="floating-card bottom-card">
-            <strong>30%</strong>
-            <span>cọc khi xác nhận lịch</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section featured-section">
+    <section class="section services-section" id="services">
       <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">Dịch vụ nổi bật</span>
-          <h2>Chọn đúng giải pháp cho không gian của bạn</h2>
-          <p>Click vào từng dịch vụ để chuyển mượt đến tab chi tiết và xem bảng giá.</p>
+        <div class="section-heading compact">
+          <span class="eyebrow">Chi tiết dịch vụ</span>
+          <h2>Bảng giá, công nghệ và thời gian lắp đặt</h2>
         </div>
-        <div class="featured-grid" id="featuredServices"></div>
-      </div>
-    </section>
 
-    <section class="section feedback-section">
-      <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">Feedback khách hàng</span>
-          <h2>Khách hàng nói gì về chúng tôi?</h2>
+        <div class="tab-controls" role="tablist" aria-label="Danh mục dịch vụ">
+          <button class="tab-btn active" data-tab="internet" role="tab">Internet</button>
+          <button class="tab-btn" data-tab="camera" role="tab">Camera</button>
+          <button class="tab-btn" data-tab="smarthome" role="tab">SmartHome</button>
+          <button class="tab-btn" data-tab="smartlock" role="tab">Khóa cửa</button>
+          <button class="tab-btn" data-tab="maintenance" role="tab">Bảo trì</button>
         </div>
-        <div class="feedback-grid" id="feedbackList"></div>
+        <div class="tab-content fade-tab active" id="serviceDetail"></div>
       </div>
     </section>
   </main>
 
-<div class="modal-backdrop" id="bookingModal" aria-hidden="true">
+  <div class="modal-backdrop" id="bookingModal" aria-hidden="true">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
       <button class="modal-close" data-close-modal="bookingModal" aria-label="Đóng popup">×</button>
       <div class="modal-header">
@@ -163,7 +110,7 @@
     </div>
   </div>
 
- <div class="modal-backdrop" id="authModal" aria-hidden="true">
+  <div class="modal-backdrop" id="authModal" aria-hidden="true">
     <div class="modal-box modal-sm" role="dialog" aria-modal="true" aria-labelledby="authTitle">
       <button class="modal-close" data-close-modal="authModal" aria-label="Đóng popup">×</button>
       <div class="modal-header">
@@ -204,16 +151,10 @@
   </div>
 
   <div class="chat-widget" id="chatWidget">
-    <button class="chat-toggle" id="chatToggle" aria-label="Mở chat tư vấn">
-      <span>💬</span>
-    </button>
-
+    <button class="chat-toggle" id="chatToggle" aria-label="Mở chat tư vấn"><span>💬</span></button>
     <div class="chat-panel" id="chatPanel" aria-hidden="true">
       <div class="chat-header">
-        <div>
-          <strong>Trợ lý vệ tinh</strong>
-          <span>Online • phản hồi tự động</span>
-        </div>
+        <div><strong>Trợ lý vệ tinh</strong><span>Online • phản hồi tự động</span></div>
         <button id="closeChatBtn" aria-label="Đóng chat">×</button>
       </div>
       <div class="chat-body" id="chatBody">

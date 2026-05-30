@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản lý Dịch vụ | Dịch vụ vệ tinh</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/ui.css" />
+  <style>
+    .status-badge { padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+    .detail-item { display: flex; border-bottom: 1px dashed var(--color-border); padding: 10px 0; }
+    .detail-item:last-child { border-bottom: none; }
+    .detail-item strong { width: 140px; flex-shrink: 0; color: var(--color-muted); }
+    .detail-item span { color: var(--color-text); font-weight: 600; }
+    #editNoteInput { transition: border-color 0.2s, box-shadow 0.2s; }
+    #editNoteInput:focus { border-color: var(--color-primary); box-shadow: 0 0 0 4px rgba(11, 92, 255, 0.12); outline: none; }
+  </style>
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <header class="site-header" id="header">
+    <div class="container header-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-icon"></span><span>Dịch vụ <strong>vệ tinh</strong></span>
+      </a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Mở menu điều hướng">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="dich-vu.html" class="nav-link">Dịch vụ</a>
+        <a href="bao-tri.html" class="nav-link">Bảo trì</a>
+        <a href="lien-he.html" class="nav-link">Liên hệ</a>
+      </nav>
+
+      <div class="auth-area" id="authArea"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: 40px;">
+      <div class="container">
+        <div class="section-heading compact" style="text-align: left; margin-bottom: 30px;">
+          <span class="eyebrow" id="pageRoleText">ĐANG TẢI DỮ LIỆU...</span>
+          <h2>Danh sách Yêu cầu & Dịch vụ</h2>
+        </div>
+
+        <div class="table-responsive" style="background: #fff; border: 1px solid var(--color-border); border-radius: 16px; overflow: hidden;">
+          <table class="price-table" style="margin-bottom: 0;">
+            <thead id="tableHead">
+              <tr>
+                <th>Ngày tạo</th>
+                <th>Khách hàng</th>
+                <th>Số điện thoại</th>
+                <th>Loại yêu cầu</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="dataTableBody">
+              <tr><td colspan="6" style="text-align: center; padding: 30px;">Đang đồng bộ với cơ sở dữ liệu...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="detailModal" aria-hidden="true">
+    <div class="modal-box modal-sm" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <button class="modal-close" data-close-modal="detailModal" aria-label="Đóng popup">×</button>
+      <div class="modal-header">
+        <span class="eyebrow" style="color: var(--color-primary);">THÔNG TIN ĐẦY ĐỦ</span>
+        <h2 id="detailTitle">Chi tiết yêu cầu</h2>
+        <p>Toàn bộ dữ liệu khách hàng gửi lên hệ thống.</p>
+      </div>
+
+      <div id="detailModalBody" style="display: grid; background: #f8fbff; padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--color-border); font-size: 0.95rem; gap: 4px;">
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/data.js"></script>
+  <script src="js/effect.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/script.js"></script>
+  
+  <script>
+    window.showDetail = function(tableName, id) {
+      const req = window.allRequestsData.find(item => item.table === tableName && item.id === id);
+      if (!req) return;
+
+      const detailBody = document.getElementById('detailModalBody');
+      const status = req.status || 'Chờ xử lý';
+      let statusColor = status === 'Đã xác nhận' ? '#19b36b' : status === 'Đã hủy' ? '#ef4444' : '#f59e0b';
+
+      let infoLabel = "Địa chỉ/Khu vực:";
+      let infoValue = req.detail;
+      let extraRow = "";
+
+      if (tableName === 'bookings') {
+        infoLabel = "Địa chỉ lắp đặt:";
+        if (req.price) {
+          extraRow += `<div class="detail-item"><strong>Tổng chi phí:</strong><span>${formatCurrency(req.price)}</span></div>`;
+          extraRow += `<div class="detail-item"><strong>Đặt cọc (30%):</strong><span style="color: var(--color-secondary);">${formatCurrency(Math.round(req.price * 0.3))}</span></div>`;
+        }
+      } else if (tableName === 'maintenances') {
+        infoLabel = "Địa chỉ bảo trì:";
+        extraRow += `<div class="detail-item"><strong>Thiết bị cần sửa:</strong><span style="color: var(--color-primary);">${req.device}</span></div>`;
+      } else if (tableName === 'consults') {
+        infoLabel = "Khu vực cần hỗ trợ:";
+        extraRow += `<div class="detail-item"><strong>Nhu cầu chính:</strong><span>${req.need}</span></div>`;
+      }
+
+      detailBody.innerHTML = `
+        <div class="detail-item"><strong>Khách hàng:</strong><span>${req.name}</span></div>
+        <div class="detail-item"><strong>Số điện thoại:</strong><span>${req.phone}</span></div>
+        <div class="detail-item"><strong>Loại yêu cầu:</strong><span>${req.type}</span></div>
+        <div class="detail-item"><strong>${infoLabel}</strong><span>${infoValue}</span></div>
+        ${extraRow}
+        <div class="detail-item"><strong>Thời gian gửi:</strong><span>${new Date(req.created_at).toLocaleString('vi-VN')}</span></div>
+        <div class="detail-item"><strong>Trạng thái:</strong><span style="color: ${statusColor};">${status}</span></div>
+        
+        <div class="detail-item" style="flex-direction: column; align-items: flex-start; gap: 8px; border-bottom: none; margin-top: 6px;">
+          <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+            <strong style="width: auto;">Ghi chú / Tình trạng:</strong>
+            <button class="btn btn-sm btn-primary" style="height: 32px; padding: 0 14px;" onclick="saveNote('${req.table}', ${req.id}, this)">Lưu ghi chú</button>
+          </div>
+          <textarea id="editNoteInput" rows="3" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 8px; font-family: inherit; resize: vertical;" placeholder="Nhập thêm ghi chú của bạn vào đây...">${req.note || ''}</textarea>
+        </div>
+      `;
+      openModal('detailModal');
+    };
+
+    window.saveNote = async function(tableName, id, btnEl) {
+      const newNote = document.getElementById('editNoteInput').value;
+      const originalText = btnEl.textContent;
+      
+      btnEl.textContent = 'Đang lưu...';
+      btnEl.disabled = true;
+      
+      try {
+        const { error } = await supabaseClient.from(tableName).update({ note: newNote }).eq('id', id);
+        if (error) throw error;
+        showToast('Đã lưu ghi chú thành công!');
+        const req = window.allRequestsData.find(item => item.table === tableName && item.id === id);
+        if (req) req.note = newNote;
+        loadDashboardData(); 
+      } catch (error) {
+        console.error(error);
+        showToast('Có lỗi xảy ra khi lưu ghi chú!', 'error');
+      } finally {
+        btnEl.textContent = originalText;
+        btnEl.disabled = false;
+      }
+    };
+
+    window.changeStatus = async function(tableName, id, newStatus) {
+      if (!confirm(`Bạn có chắc chắn muốn chuyển đơn này thành: [${newStatus}]?`)) return;
+      try {
+        const { error } = await supabaseClient.from(tableName).update({ status: newStatus }).eq('id', id);
+        if (error) throw error;
+        showToast('Đã cập nhật trạng thái thành công!');
+        loadDashboardData(); 
+      } catch (error) {
+        console.error(error);
+        showToast('Có lỗi xảy ra khi cập nhật!', 'error');
+      }
+    };
+
+    async function loadDashboardData() {
+      const tbody = document.getElementById('dataTableBody');
+      const roleText = document.getElementById('pageRoleText');
+      const tableHeadTr = document.querySelector('#tableHead tr');
+      
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) {
+        window.location.href = 'index.html'; 
+        return;
+      }
+
+      const { data: profile } = await supabaseClient.from('profiles').select('role').eq('id', session.user.id).single();
+      const isAdmin = profile?.role === 'admin';
+
+      roleText.textContent = isAdmin ? 'PANEL QUẢN TRỊ VIÊN' : 'LỊCH SỬ DỊCH VỤ CỦA TÔI';
+      if(isAdmin) roleText.style.color = 'var(--color-danger)';
+
+      if (!document.getElementById('actionCol')) {
+        tableHeadTr.insertAdjacentHTML('beforeend', `<th id="actionCol">${isAdmin ? 'Thao tác quản lý' : 'Xem chi tiết'}</th>`);
+      }
+
+      try {
+        const [resBookings, resConsults, resMaints] = await Promise.all([
+          supabaseClient.from('bookings').select('*'),
+          supabaseClient.from('consults').select('*'),
+          supabaseClient.from('maintenances').select('*')
+        ]);
+
+        let allRequests = [];
+        resBookings.data?.forEach(item => allRequests.push({ ...item, table: 'bookings', type: 'Lắp đặt', detail: item.address, badge: 'var(--color-primary)' }));
+        resConsults.data?.forEach(item => allRequests.push({ ...item, table: 'consults', type: 'Tư vấn', detail: item.area, badge: 'var(--color-warning)' }));
+        resMaints.data?.forEach(item => allRequests.push({ ...item, table: 'maintenances', type: 'Bảo trì', detail: item.device, badge: 'var(--color-success)' }));
+
+        allRequests.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        window.allRequestsData = allRequests;
+
+        if (allRequests.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--color-muted);">Chưa có yêu cầu dịch vụ nào.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = allRequests.map(req => {
+          const status = req.status || 'Chờ xử lý';
+          let statusColor = status === 'Đã xác nhận' ? '#19b36b' : status === 'Đã hủy' ? '#ef4444' : '#f59e0b';
+          let statusBg = status === 'Đã xác nhận' ? '#dcfce7' : status === 'Đã hủy' ? '#fee2e2' : '#fef3c7';
+
+          let actionButtonsHTML = isAdmin ? `
+            <td style="white-space: nowrap;">
+              <button class="btn btn-sm" style="padding: 0 10px; font-size: 0.75rem; background: var(--color-success); color:#fff; border:none;" onclick="changeStatus('${req.table}', ${req.id}, 'Đã xác nhận')">✔ Xác nhận</button>
+              <button class="btn btn-sm btn-outline" style="padding: 0 10px; font-size: 0.75rem; border-color: var(--color-primary); color: var(--color-primary);" onclick="showDetail('${req.table}', ${req.id})">📋 Chi tiết</button>
+              <button class="btn btn-sm btn-outline" style="padding: 0 10px; font-size: 0.75rem; border-color: var(--color-danger); color: var(--color-danger);" onclick="changeStatus('${req.table}', ${req.id}, 'Đã hủy')">✖ Hủy</button>
+            </td>
+          ` : `
+            <td>
+              <button class="btn btn-sm btn-outline" style="padding: 0 12px; font-size: 0.8rem;" onclick="showDetail('${req.table}', ${req.id})">📋 Xem & Sửa ghi chú</button>
+            </td>
+          `;
+
+          return `
+            <tr style="transition: background 0.2s;" onmouseover="this.style.background='#f8fbff'" onmouseout="this.style.background='transparent'">
+              <td style="color: var(--color-muted); font-size: 0.9rem;">${new Date(req.created_at).toLocaleDateString('vi-VN')}</td>
+              <td><strong style="color: var(--color-text);">${req.name}</strong></td>
+              <td>${req.phone}</td>
+              <td><span style="background: ${req.badge}; color: #fff; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">${req.type}</span></td>
+              <td><span class="status-badge" style="background: ${statusBg}; color: ${statusColor};">${status}</span></td>
+              ${actionButtonsHTML}
+            </tr>
+          `;
+        }).join('');
+      } catch (error) {
+        console.error(error);
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--color-danger);">Lỗi tải dữ liệu. Vui lòng F5 lại!</td></tr>`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(loadDashboardData, 500); 
+    });
+  </script>
+</body>
+</html>
