@@ -105,7 +105,22 @@ function initMobileMenu() {
   });
 
   nav.addEventListener('click', (event) => {
-    if (event.target.closest('a')) nav.classList.remove('open');
+    const targetLink = event.target.closest('a');
+    if (!targetLink) return;
+
+    // Xử lý Menu cấp 2 trên Mobile
+    const dropdown = targetLink.closest('.nav-item-dropdown');
+    const hasSubMenu = targetLink.nextElementSibling && targetLink.nextElementSibling.classList.contains('dropdown-menu');
+    
+    // Nếu bấm vào chữ "Dịch vụ" có menu con khi đang dùng điện thoại
+    if (hasSubMenu && window.innerWidth <= 860) {
+      event.preventDefault(); // Ngăn chuyển trang để cuộn mở menu con xuống
+      dropdown.classList.toggle('active');
+      return;
+    }
+
+    // Nếu bấm vào các link bình thường (kể cả link trong menu con), thì đóng toàn bộ Menu lại
+    nav.classList.remove('open');
   });
 }
 
