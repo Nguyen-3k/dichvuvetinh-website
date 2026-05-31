@@ -295,45 +295,80 @@ function openAuthModal(mode) {
 // Hàm render Avatar và Nút dựa trên quyền (Role)
 async function renderAuthArea() {
   const authArea = document.getElementById('authArea');
+  const mainNav = document.getElementById('mainNav'); // Kéo thanh menu chính ra để thao tác
   if (!authArea) return;
 
   const { data: { session } } = await supabaseClient.auth.getSession();
   const user = session?.user;
 
-  // 1. Chưa đăng nhập
+  // Xóa link Đăng nhập/Admin trên Mobile cũ (tránh bị nhân đôi dòng khi F5)
+  document.getElementById('mobileAuthLink')?.remove();
+
+  // 1. CHƯA ĐĂNG NHẬP
   if (!user) {
     authArea.innerHTML = `
-      <button class="btn btn-outline btn-sm" id="openLoginBtn">Đăng nhập</button>
-      <button class="btn btn-primary btn-sm" id="openRegisterBtn">Đăng ký</button>
+      <button class="btn btn-outline btn-sm desktop-only-btn" id="openLoginBtn">Đăng nhập</button>
+      <button class="btn btn-primary btn-sm desktop-only-btn" id="openRegisterBtn">Đăng ký</button>
+      <button class="btn btn-outline btn-sm mobile-only-btn" id="openLoginMobile" style="padding: 4px 10px; font-size: 0.8rem;">Đăng nhập</button>
     `;
+    
     document.getElementById('openLoginBtn')?.addEventListener('click', () => openAuthModal('login'));
     document.getElementById('openRegisterBtn')?.addEventListener('click', () => openAuthModal('register'));
+    document.getElementById('openLoginMobile')?.addEventListener('click', () => openAuthModal('login'));
     return;
   }
 
-  // 2. Đã đăng nhập: Lấy quyền (role) VÀ tên (full_name) từ bảng profiles
+  // 2. ĐÃ ĐĂNG NHẬP
   const { data: profile } = await supabaseClient.from('profiles').select('role, full_name').eq('id', user.id).single();
   const role = profile?.role || 'customer';
   const fullName = profile?.full_name || user.user_metadata?.full_name || 'Khách hàng';
 
-  // 3. Logic hiển thị nút mới: Kiểm tra xem có đang ở trang Quản lý không
+  // 3. LOGIC HIỂN THỊ DÀNH CHO PC VÀ MOBILE
   const isQuanLyPage = window.location.pathname.includes('quan-ly.html');
   let actionButton = '';
-  
+  let mobileNavText = '';
+  let mobileNavLink = '';
+  let mobileNavColor = 'var(--color-primary)';
+
   if (isQuanLyPage) {
-    actionButton = `<a href="index.html" class="btn btn-outline btn-sm">🏠 Quay lại Trang chủ</a>`;
+    actionButton = `<a href="index.html" class="btn btn-outline btn-sm desktop-only-btn">🏠 Quay lại</a>`;
+    mobileNavText = '🏠 Quay lại Trang chủ';
+    mobileNavLink = 'index.html';
   } else {
-    actionButton = role === 'admin' 
-      ? `<a href="quan-ly.html" class="btn btn-sm" style="background: var(--color-danger); color: #fff; border: none;">🔧 Trang Admin</a>`
-      : `<a href="quan-ly.html" class="btn btn-outline btn-sm">Lịch sử của tôi</a>`;
+    if (role === 'admin') {
+      actionButton = `<a href="quan-ly.html" class="btn btn-sm desktop-only-btn" style="background: var(--color-danger); color: #fff; border: none;">🔧 Trang Admin</a>`;
+      mobileNavText = '🔧 Bảng điều khiển Admin';
+      mobileNavLink = 'quan-ly.html';
+      mobileNavColor = 'var(--color-danger)';
+    } else {
+      actionButton = `<a href="quan-ly.html" class="btn btn-outline btn-sm desktop-only-btn">Lịch sử của tôi</a>`;
+      mobileNavText = '📦 Lịch sử dịch vụ của tôi';
+      mobileNavLink = 'quan-ly.html';
+    }
   }
 
+  // Bơm link quản lý vào thẳng thanh Menu 3 gạch (Chỉ hiển thị trên Mobile)
+  if (mainNav) {
+    const mobileLi = document.createElement('a');
+    mobileLi.href = mobileNavLink;
+    mobileLi.className = 'nav-link mobile-only-btn';
+    mobileLi.id = 'mobileAuthLink';
+    mobileLi.style.color = mobileNavColor;
+    mobileLi.style.fontWeight = '700';
+    mobileLi.style.borderTop = '1px dashed var(--color-border)'; // Kẻ vạch phân cách cho đẹp
+    mobileLi.style.paddingTop = '16px';
+    mobileLi.style.marginTop = '8px';
+    mobileLi.textContent = mobileNavText;
+    mainNav.appendChild(mobileLi);
+  }
+
+  // Render lại khu vực Header (Avatar + Nút Thoát thu gọn)
   authArea.innerHTML = `
     <div class="user-profile">
       <span class="avatar" title="${fullName}">${getInitials(fullName)}</span>
-      <span class="user-name">${fullName}</span>
+      <span class="user-name desktop-only-btn">${fullName}</span>
       ${actionButton}
-      <button class="btn btn-outline btn-sm logout-btn" id="logoutBtn">Đăng xuất</button>
+      <button class="btn btn-outline btn-sm logout-btn" id="logoutBtn" style="padding: 4px 10px; font-size: 0.8rem;">Thoát</button>
     </div>
   `;
 
@@ -443,4 +478,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initAuthForm(); 
   initMaintenanceForm();
   listenToProfileChanges();
+  
 });

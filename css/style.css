@@ -680,3 +680,26 @@ button {
   color: var(--color-primary);
   padding-left: 20px; /* Thụt lề nhẹ vào trong khi di chuột */
 }
+
+/* =========================================================
+   ĐIỀU HƯỚNG NÚT RESPONSIVE (MOBILE / PC)
+   ========================================================= */
+@media (max-width: 860px) {
+  /* Trên Điện thoại: Ẩn nút ở Header, Thu hẹp khoảng cách */
+  .desktop-only-btn {
+    display: none !important;
+  }
+  .mobile-only-btn {
+    display: flex !important;
+  }
+  .user-profile {
+    gap: 8px; 
+  }
+}
+
+@media (min-width: 861px) {
+  /* Trên Máy tính: Ẩn link di động trong Menu 3 gạch */
+  .mobile-only-btn {
+    display: none !important;
+  }
+}
