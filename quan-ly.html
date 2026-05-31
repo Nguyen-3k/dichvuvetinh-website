@@ -263,7 +263,12 @@
           showToast('🔔 Có cập nhật từ đơn Tư vấn!', 'success');
           loadDashboardData();
         })
-        .subscribe();
+        .subscribe((status) => {
+          console.log('Trạng thái kết nối Real-time:', status);
+          if (status === 'SUBSCRIBED') {
+            console.log('✅ ĐÃ KẾT NỐI REAL-TIME THÀNH CÔNG!');
+          }
+        });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
