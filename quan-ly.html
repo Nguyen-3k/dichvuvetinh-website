@@ -247,8 +247,30 @@
       }
     }
 
+    // --- MỚI THÊM: LẮNG NGHE SỰ KIỆN REAL-TIME CHO ĐƠN HÀNG ---
+    function listenToDatabaseChanges() {
+      supabaseClient
+        .channel('realtime-orders')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, payload => {
+          showToast('🔔 Có cập nhật từ đơn Lắp đặt!', 'success');
+          loadDashboardData();
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'maintenances' }, payload => {
+          showToast('🔔 Có cập nhật từ đơn Bảo trì!', 'success');
+          loadDashboardData();
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'consults' }, payload => {
+          showToast('🔔 Có cập nhật từ đơn Tư vấn!', 'success');
+          loadDashboardData();
+        })
+        .subscribe();
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(loadDashboardData, 500); 
+      setTimeout(() => {
+        loadDashboardData();
+        listenToDatabaseChanges(); // Kích hoạt bắt sóng thời gian thực
+      }, 500); 
     });
   </script>
 </body>
