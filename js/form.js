@@ -311,10 +311,10 @@ async function renderAuthArea() {
     return;
   }
 
-  // 2. Đã đăng nhập: Lấy quyền của người dùng từ bảng profiles
-  const { data: profile } = await supabaseClient.from('profiles').select('role').eq('id', user.id).single();
+// 2. Đã đăng nhập: Lấy quyền (role) VÀ tên (full_name) từ bảng profiles
+  const { data: profile } = await supabaseClient.from('profiles').select('role, full_name').eq('id', user.id).single();
   const role = profile?.role || 'customer';
-  const fullName = user.user_metadata?.full_name || 'Khách hàng';
+  const fullName = profile?.full_name || user.user_metadata?.full_name || 'Khách hàng';
 
   // 3. Quyết định nút hiển thị
   const actionButton = role === 'admin' 
