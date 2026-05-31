@@ -83,6 +83,20 @@
     </div>
   </div>
 
+  <div class="modal-backdrop" id="confirmModal" aria-hidden="true">
+    <div class="modal-box modal-sm" role="dialog" aria-modal="true" style="text-align: center; padding: 40px 30px;">
+      <div style="font-size: 3.5rem; line-height: 1; margin-bottom: 16px;">⚠️</div>
+      <h2 style="margin-bottom: 12px; font-size: 1.8rem;">Xác nhận thao tác</h2>
+      <p id="confirmMessage" style="color: var(--color-muted); margin-bottom: 28px; font-size: 1.05rem;">
+        Bạn có chắc chắn muốn thực hiện hành động này?
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button class="btn btn-outline" data-close-modal="confirmModal" style="width: 130px;">Hủy bỏ</button>
+        <button class="btn btn-primary" id="confirmActionBtn" style="width: 130px; background: var(--color-warning); border: none; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.25);">Đồng ý</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/data.js"></script>
   <script src="js/effect.js"></script>
@@ -109,7 +123,7 @@
           extraRow += `<div class="detail-item"><strong>Đặt cọc (30%):</strong><span style="color: var(--color-secondary);">${formatCurrency(Math.round(req.price * 0.3))}</span></div>`;
         }
       } else if (tableName === 'maintenances') {
-        infoLabel = "Địa chỉ bảo trì:";
+        infoLabel = "Địa bảo trì:";
         extraRow += `<div class="detail-item"><strong>Thiết bị cần sửa:</strong><span style="color: var(--color-primary);">${req.device}</span></div>`;
       } else if (tableName === 'consults') {
         infoLabel = "Khu vực cần hỗ trợ:";
@@ -159,8 +173,28 @@
       }
     };
 
-    window.changeStatus = async function(tableName, id, newStatus) {
-      if (!confirm(`Bạn có chắc chắn muốn chuyển đơn này thành: [${newStatus}]?`)) return;
+    // --- MỚI THÊM: Logic thay thế hàm confirm() mặc định ---
+    let pendingAction = null; 
+
+    window.changeStatus = function(tableName, id, newStatus) {
+      // Đổi chữ trong Modal
+      const confirmMsg = document.getElementById('confirmMessage');
+      confirmMsg.innerHTML = `Bạn có chắc chắn muốn chuyển đơn này thành:<br><strong style="color: var(--color-text); font-size: 1.2rem;">[${newStatus}]</strong>?`;
+      
+      // Ghi nhớ hành động người dùng vừa bấm
+      pendingAction = { tableName, id, newStatus };
+      
+      // Mở Popup xịn xò
+      openModal('confirmModal');
+    };
+
+    // Thực thi khi Admin bấm nút "Đồng ý" trong Popup
+    document.getElementById('confirmActionBtn').addEventListener('click', async () => {
+      if (!pendingAction) return;
+      
+      const { tableName, id, newStatus } = pendingAction;
+      closeModal('confirmModal'); // Tắt Popup ngay lập tức
+      
       try {
         const { error } = await supabaseClient.from(tableName).update({ status: newStatus }).eq('id', id);
         if (error) throw error;
@@ -169,8 +203,10 @@
       } catch (error) {
         console.error(error);
         showToast('Có lỗi xảy ra khi cập nhật!', 'error');
+      } finally {
+        pendingAction = null; // Dọn dẹp biến nhớ
       }
-    };
+    });
 
     async function loadDashboardData() {
       const tbody = document.getElementById('dataTableBody');
@@ -247,7 +283,6 @@
       }
     }
 
-    // --- MỚI THÊM: LẮNG NGHE SỰ KIỆN REAL-TIME CHO ĐƠN HÀNG ---
     function listenToDatabaseChanges() {
       supabaseClient
         .channel('realtime-orders')
@@ -274,7 +309,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         loadDashboardData();
-        listenToDatabaseChanges(); // Kích hoạt bắt sóng thời gian thực
+        listenToDatabaseChanges();
       }, 500); 
     });
   </script>
