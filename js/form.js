@@ -311,15 +311,22 @@ async function renderAuthArea() {
     return;
   }
 
-// 2. Đã đăng nhập: Lấy quyền (role) VÀ tên (full_name) từ bảng profiles
+  // 2. Đã đăng nhập: Lấy quyền (role) VÀ tên (full_name) từ bảng profiles
   const { data: profile } = await supabaseClient.from('profiles').select('role, full_name').eq('id', user.id).single();
   const role = profile?.role || 'customer';
   const fullName = profile?.full_name || user.user_metadata?.full_name || 'Khách hàng';
 
-  // 3. Quyết định nút hiển thị
-  const actionButton = role === 'admin' 
-    ? `<a href="quan-ly.html" class="btn btn-sm" style="background: var(--color-danger); color: #fff; border: none;">🔧 Trang Admin</a>`
-    : `<a href="quan-ly.html" class="btn btn-outline btn-sm">Lịch sử của tôi</a>`;
+  // 3. Logic hiển thị nút mới: Kiểm tra xem có đang ở trang Quản lý không
+  const isQuanLyPage = window.location.pathname.includes('quan-ly.html');
+  let actionButton = '';
+  
+  if (isQuanLyPage) {
+    actionButton = `<a href="index.html" class="btn btn-outline btn-sm">🏠 Quay lại Trang chủ</a>`;
+  } else {
+    actionButton = role === 'admin' 
+      ? `<a href="quan-ly.html" class="btn btn-sm" style="background: var(--color-danger); color: #fff; border: none;">🔧 Trang Admin</a>`
+      : `<a href="quan-ly.html" class="btn btn-outline btn-sm">Lịch sử của tôi</a>`;
+  }
 
   authArea.innerHTML = `
     <div class="user-profile">
@@ -332,7 +339,6 @@ async function renderAuthArea() {
 
   document.getElementById('logoutBtn')?.addEventListener('click', async () => {
     await supabaseClient.auth.signOut();
-    // Nếu đang ở trang Quản lý mà đăng xuất thì đá văng về Trang chủ
     if (window.location.pathname.includes('quan-ly.html')) {
         window.location.href = 'index.html';
     } else {
@@ -412,9 +418,29 @@ function initAuthForm() {
   });
 }
 
+/* --- 5. LẮNG NGHE REAL-TIME (THỜI GIAN THỰC) CHO TÀI KHOẢN --- */
+function listenToProfileChanges() {
+  supabaseClient
+    .channel('realtime-profiles')
+    .on(
+      'postgres_changes',
+      { event: 'UPDATE', schema: 'public', table: 'profiles' },
+      async (payload) => {
+        // Kiểm tra xem người bị đổi tên có phải là người đang đăng nhập trên máy này không
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session && session.user.id === payload.new.id) {
+          console.log('Phát hiện dữ liệu Profile thay đổi, tự động cập nhật UI...');
+          renderAuthArea(); // Gọi lại hàm vẽ Avatar để cập nhật tên mới ngay lập tức
+        }
+      }
+    )
+    .subscribe();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initBookingForm();
   initConsultForm();
   initAuthForm(); 
   initMaintenanceForm();
+  listenToProfileChanges();
 });
