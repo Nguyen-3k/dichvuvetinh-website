@@ -118,10 +118,6 @@ const faqData = [
     answer: 'Thông thường chúng tôi phản hồi trong 15 phút và có thể sắp lịch khảo sát trong ngày nếu khu vực còn lịch trống.'
   },
   {
-    question: 'Tôi cần cọc bao nhiêu khi đặt lịch?',
-    answer: 'Bạn cần cọc 30% giá trị dịch vụ. Số tiền còn lại thanh toán sau khi nghiệm thu hệ thống.'
-  },
-  {
     question: 'Dịch vụ có bảo hành không?',
     answer: 'Có. Thiết bị được bảo hành theo hãng, phần kỹ thuật lắp đặt được hỗ trợ kiểm tra và bảo trì theo gói đã chọn.'
   },
