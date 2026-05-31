@@ -295,14 +295,15 @@ function openAuthModal(mode) {
 // Hàm render Avatar và Nút dựa trên quyền (Role)
 async function renderAuthArea() {
   const authArea = document.getElementById('authArea');
-  const mainNav = document.getElementById('mainNav'); // Kéo thanh menu chính ra để thao tác
+  const mainNav = document.getElementById('mainNav'); 
   if (!authArea) return;
 
   const { data: { session } } = await supabaseClient.auth.getSession();
   const user = session?.user;
 
-  // Xóa link Đăng nhập/Admin trên Mobile cũ (tránh bị nhân đôi dòng khi F5)
-  document.getElementById('mobileAuthLink')?.remove();
+  // QUAN TRỌNG: Quét và XÓA SẠCH tất cả các link Mobile cũ (tránh nhân bản)
+  const oldMobileLinks = document.querySelectorAll('.mobile-only-btn.nav-link');
+  oldMobileLinks.forEach(link => link.remove());
 
   // 1. CHƯA ĐĂNG NHẬP
   if (!user) {
@@ -351,11 +352,10 @@ async function renderAuthArea() {
   if (mainNav) {
     const mobileLi = document.createElement('a');
     mobileLi.href = mobileNavLink;
-    mobileLi.className = 'nav-link mobile-only-btn';
-    mobileLi.id = 'mobileAuthLink';
+    mobileLi.className = 'nav-link mobile-only-btn'; // Gắn class này để CSS tự ẩn/hiện
     mobileLi.style.color = mobileNavColor;
     mobileLi.style.fontWeight = '700';
-    mobileLi.style.borderTop = '1px dashed var(--color-border)'; // Kẻ vạch phân cách cho đẹp
+    mobileLi.style.borderTop = '1px dashed var(--color-border)'; 
     mobileLi.style.paddingTop = '16px';
     mobileLi.style.marginTop = '8px';
     mobileLi.textContent = mobileNavText;
