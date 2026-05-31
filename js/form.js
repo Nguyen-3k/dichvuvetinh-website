@@ -301,9 +301,9 @@ async function renderAuthArea() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   const user = session?.user;
 
-  // QUAN TRỌNG: Quét và XÓA SẠCH tất cả các link Mobile cũ (tránh nhân bản)
-  const oldMobileLinks = document.querySelectorAll('.mobile-only-btn.nav-link');
-  oldMobileLinks.forEach(link => link.remove());
+  // QUAN TRỌNG: Quét và XÓA SẠCH bằng ID để chống nhân đôi 100%
+  const oldLinks = document.querySelectorAll('#mobileAuthLink');
+  oldLinks.forEach(link => link.remove());
 
   // 1. CHƯA ĐĂNG NHẬP
   if (!user) {
@@ -348,21 +348,26 @@ async function renderAuthArea() {
     }
   }
 
-  // Bơm link quản lý vào thẳng thanh Menu 3 gạch (Chỉ hiển thị trên Mobile)
+// 4. Bơm link quản lý vào thẳng thanh Menu 3 gạch 
   if (mainNav) {
+    // DỜI LỆNH XÓA XUỐNG ĐÂY: Dọn rác ngay trước khi tạo cái mới để chống lỗi "Đua lệnh"
+    const oldLinks = document.querySelectorAll('#mobileAuthLink');
+    oldLinks.forEach(link => link.remove());
+
     const mobileLi = document.createElement('a');
+    mobileLi.id = 'mobileAuthLink';
+    mobileLi.className = 'nav-link mobile-only-btn'; // Gắn class để CSS quản lý
     mobileLi.href = mobileNavLink;
-    mobileLi.className = 'nav-link mobile-only-btn'; // Gắn class này để CSS tự ẩn/hiện
     mobileLi.style.color = mobileNavColor;
     mobileLi.style.fontWeight = '700';
     mobileLi.style.borderTop = '1px dashed var(--color-border)'; 
     mobileLi.style.paddingTop = '16px';
     mobileLi.style.marginTop = '8px';
-    mobileLi.textContent = mobileNavText;
+    mobileLi.innerHTML = mobileNavText;
     mainNav.appendChild(mobileLi);
   }
-
-  // Render lại khu vực Header (Avatar + Nút Thoát thu gọn)
+  
+  // 5. Render lại khu vực Header (Avatar + Nút Thoát thu gọn)
   authArea.innerHTML = `
     <div class="user-profile">
       <span class="avatar" title="${fullName}">${getInitials(fullName)}</span>

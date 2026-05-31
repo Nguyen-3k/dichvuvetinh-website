@@ -684,14 +684,23 @@ button {
 /* =========================================================
    ĐIỀU HƯỚNG NÚT RESPONSIVE (MOBILE / PC)
    ========================================================= */
+.mobile-only-btn {
+  display: none !important; /* Luôn ẩn ở màn hình PC */
+}
+
+/* Đảm bảo chỉ hiện nút Mobile khi thanh Menu đã chuyển sang chế độ 3 gạch */
+/* Lưu ý: Nếu menu 3 gạch của bạn bật ở 768px, hãy đổi số 860px ở dưới thành 768px */
 @media (max-width: 860px) {
-  /* Trên Điện thoại: Ẩn nút ở Header, Thu hẹp khoảng cách */
   .desktop-only-btn {
     display: none !important;
   }
+  
+  /* Đổi từ flex thành block để chữ dàn ngang thoải mái, không bị ép dọc */
   .mobile-only-btn {
-    display: flex !important;
+    display: block !important; 
+    width: 100%;
   }
+  
   .user-profile {
     gap: 8px; 
   }
