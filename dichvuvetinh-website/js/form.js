@@ -2,6 +2,7 @@
    form.js - Validation, Price Calculation, Booking, Auth
    ========================================================= */
 
+   
 const PHONE_REGEX = /^(0|\+84)(\d{9,10})$/;
 
 function formatCurrency(value) {

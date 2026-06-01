@@ -5,7 +5,7 @@
 .btn:hover {
   transform: translateY(-3px);
 }
-
+/* Hover Effects */
 .btn-primary:hover {
   box-shadow: 0 18px 34px rgba(11, 92, 255, 0.28);
 }
