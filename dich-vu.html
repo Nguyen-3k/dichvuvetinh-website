@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Chi tiết các dịch vụ Lắp đặt, bảo trì Internet, Camera và SmartHome." />
+  <title>Dịch vụ | Dịch vụ vệ tinh</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/ui.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <header class="site-header" id="header">
+    <div class="container header-wrapper">
+      <a href="index.html" class="logo" aria-label="Dịch vụ vệ tinh">
+        <span class="logo-icon"></span>
+        <span>Dịch vụ <strong>vệ tinh</strong></span>
+      </a>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Mở menu điều hướng">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        
+        <div class="nav-item-dropdown">
+          <a href="dich-vu.html" class="nav-link">Dịch vụ <span class="dropdown-arrow">▾</span></a>
+          <div class="dropdown-menu">
+            <a href="dich-vu.html?service=internet">Lắp đặt Internet</a>
+            <a href="dich-vu.html?service=camera">Camera an ninh</a>
+            <a href="dich-vu.html?service=smarthome">Nhà thông minh</a>
+            <a href="dich-vu.html?service=smartlock">Khóa cửa điện tử</a>
+            <a href="bao-tri.html">Dịch vụ bảo trì</a>
+          </div>
+        </div>
+        <a href="bao-tri.html" class="nav-link">Bảo trì</a>
+        <a href="lien-he.html" class="nav-link">Liên hệ</a>
+      </nav>
+
+      <div class="auth-area" id="authArea"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section services-section" id="services">
+      <div class="container">
+        <div class="section-heading compact">
+          <span class="eyebrow">Chi tiết dịch vụ</span>
+          <h2>Bảng giá, công nghệ và thời gian lắp đặt</h2>
+        </div>
+
+        <div class="tab-controls" role="tablist" aria-label="Danh mục dịch vụ">
+          <button class="tab-btn active" data-tab="internet" role="tab">Internet</button>
+          <button class="tab-btn" data-tab="camera" role="tab">Camera</button>
+          <button class="tab-btn" data-tab="smarthome" role="tab">SmartHome</button>
+          <button class="tab-btn" data-tab="smartlock" role="tab">Khóa cửa</button>
+          <button class="tab-btn" data-tab="maintenance" role="tab">Bảo trì</button>
+        </div>
+        <div class="tab-content fade-tab active" id="serviceDetail"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-about">
+        <a href="index.html" class="logo" style="color: #fff;">
+          <span class="logo-icon"></span><span>Dịch vụ <strong style="color: var(--color-secondary);">vệ tinh</strong></span>
+        </a>
+        <p>Giải pháp lắp đặt mạng Internet, Camera an ninh và Nhà thông minh (SmartHome) toàn diện. Lắp đặt nhanh chóng, bảo trì tận tâm 24/7.</p>
+      </div>
+      
+      <div class="footer-links">
+        <h3>Dịch vụ</h3>
+        <ul>
+          <li><a href="dich-vu.html?service=internet">Lắp đặt Internet</a></li>
+          <li><a href="dich-vu.html?service=camera">Camera an ninh</a></li>
+          <li><a href="dich-vu.html?service=smarthome">Nhà thông minh</a></li>
+          <li><a href="bao-tri.html">Bảo trì định kỳ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h3>Truy cập nhanh</h3>
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="dich-vu.html">Bảng giá chi tiết</a></li>
+          <li><a href="lien-he.html">Liên hệ tư vấn</a></li>
+          <li><a href="quan-ly.html">Tra cứu đơn hàng</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h3>Tổng đài hỗ trợ</h3>
+        <p><strong>Hotline:</strong> 0900 123 456</p>
+        <p><strong>Email:</strong> hotro@dichvuvetinh.vn</p>
+        <p><strong>Khu vực:</strong> 567 Lê Duẩn, Phường Eakao, Đắk Lắk</p>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Hệ thống Dịch vụ Vệ tinh. Thiết kế và phát triển bởi <strong>Nhóm 7 - CNTTK23 (ĐH Tây Nguyên)</strong>. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <div class="modal-backdrop" id="bookingModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+      <button class="modal-close" data-close-modal="bookingModal" aria-label="Đóng popup">×</button>
+      <div class="modal-header">
+        <span class="eyebrow">Đặt lịch lắp đặt</span>
+        <h2 id="bookingTitle">Chọn dịch vụ</h2>
+        <p id="bookingSubtitle">Điền thông tin để kỹ thuật viên xác nhận lịch.</p>
+      </div>
+
+      <form id="bookingForm" novalidate>
+        <input type="hidden" id="bookingServiceId" name="serviceId" />
+        <input type="hidden" id="bookingServicePrice" name="servicePrice" />
+
+        <div class="booking-price-box">
+          <span>Giá dịch vụ gốc</span>
+          <strong id="bookingBasePrice">0đ</strong>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="bookingName">Họ và tên</label>
+            <input type="text" id="bookingName" name="name" placeholder="Nhập họ tên" />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-group">
+            <label for="bookingPhone">Số điện thoại</label>
+            <input type="tel" id="bookingPhone" name="phone" placeholder="Nhập số điện thoại" />
+            <small class="error-message"></small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bookingAddress">Địa chỉ lắp đặt</label>
+          <input type="text" id="bookingAddress" name="address" placeholder="Số nhà, đường, phường/xã, quận/huyện" />
+          <small class="error-message"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="bookingNote">Ghi chú</label>
+          <textarea id="bookingNote" name="note" rows="3" placeholder="Thời gian rảnh, yêu cầu kỹ thuật, vị trí lắp đặt..."></textarea>
+          <small class="error-message"></small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="confirmBookingBtn">
+          Xác nhận sử dụng dịch vụ
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="authModal" aria-hidden="true">
+    <div class="modal-box modal-sm" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" data-close-modal="authModal" aria-label="Đóng popup">×</button>
+      <div class="modal-header">
+        <span class="eyebrow" style="color: var(--color-primary);">TÀI KHOẢN HỆ THỐNG</span>
+        <h2 id="authTitle">Đăng nhập</h2>
+        <p id="authSubtitle">Vui lòng đăng nhập để tiếp tục.</p>
+      </div>
+
+      <form id="authForm" novalidate>
+        <input type="hidden" id="authMode" value="login" />
+
+        <div class="form-group" id="nameGroup" style="display: none;">
+          <label for="authFullName">Họ và tên</label>
+          <input type="text" id="authFullName" name="fullName" placeholder="Ví dụ: Nguyễn Văn A" />
+          <small class="error-message"></small>
+        </div>
+        <div class="form-group">
+          <label for="authEmail">Email</label>
+          <input type="email" id="authEmail" name="email" placeholder="Ví dụ: email@gmail.com" />
+          <small class="error-message"></small>
+        </div>
+        <div class="form-group">
+          <label for="authPassword">Mật khẩu</label>
+          <input type="password" id="authPassword" name="password" placeholder="Mật khẩu (ít nhất 6 ký tự)" />
+          <small class="error-message"></small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-full" id="authSubmitBtn">Đăng nhập</button>
+
+        <div style="text-align: center; margin-top: 18px; font-size: 0.9rem;">
+          <span id="authToggleText">Chưa có tài khoản?</span>
+          <a href="#" id="authToggleLink" style="color: var(--color-primary); font-weight: 700;">Đăng ký ngay</a>
+        </div>
+      </form>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <div class="chat-widget" id="chatWidget">
+    <button class="chat-toggle" id="chatToggle" aria-label="Mở chat tư vấn"><span>💬</span></button>
+    <div class="chat-panel" id="chatPanel" aria-hidden="true">
+      <div class="chat-header">
+        <div><strong>Trợ lý vệ tinh</strong><span>Online • phản hồi tự động</span></div>
+        <button id="closeChatBtn" aria-label="Đóng chat">×</button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-message bot">Xin chào! Bạn muốn hỏi nhanh về dịch vụ nào?</div>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/data.js"></script>
+  <script src="js/effect.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
